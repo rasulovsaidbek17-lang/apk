@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build:
-    name: Build Expo debug APK
+    name: Build Expo release APK
     runs-on: ubuntu-latest
 
     steps:
@@ -34,16 +34,16 @@ jobs:
       - name: Generate Android project with Expo
         run: npx expo prebuild --platform android --clean
 
-      - name: Build installable debug APK
+      - name: Build installable release APK
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon
+          ./gradlew assembleRelease --no-daemon
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: wxzcrm-expo-debug-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: wxzcrm-expo-release-apk
+          path: android/app/build/outputs/apk/release/app-release-unsigned.apk
           if-no-files-found: error
           retention-days: 14
